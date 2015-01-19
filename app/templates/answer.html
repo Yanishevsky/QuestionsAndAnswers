@@ -1,0 +1,16 @@
+<table class="table table-hover">
+    <tr>
+        <td>
+            <div class="form-group">
+              <label for="comment">{{answer.author.nickname}} answered on {{momentjs(answer.timestamp).fromNow()}}</label>
+              <textarea class="form-control" rows="2" cols="100" readonly="True" id="comment">{{answer.body}}</textarea>
+            </div>
+        </td>
+        <td>Current rating = {{answer.rating}}</td>
+        <td>
+            {% if g.user.is_authenticated() %}
+            <p><strong><a href="{{ url_for('rating', qid = answer.question.id, aid = answer.id, page = answers.page) }}">Like</a></strong></p>
+            {% endif %}
+        </td>
+    </tr>
+</table>

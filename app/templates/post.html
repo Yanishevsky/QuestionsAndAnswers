@@ -1,0 +1,8 @@
+<table class="table table-hover">
+    <tr>
+        <td>
+            <p>{{post.author.nickname}} asked on {{momentjs(post.timestamp).fromNow()}}</p>
+            <p><strong><a href="{{ url_for('question', qid = post.id) }}">{{post.body}}</a></strong></p>
+        </td>
+    </tr>
+</table>

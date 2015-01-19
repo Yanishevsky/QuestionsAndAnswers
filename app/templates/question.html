@@ -1,0 +1,43 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+{% include 'flash.html' %}
+<h1>{{question.body}}</h1>
+{% if g.user.is_authenticated() %}
+<div class="well">
+    <form class="form-horizontal" action="" method="post" name="answer">
+        {{form.hidden_tag()}}
+        <div class="control-group{% if form.errors.answer %} error{% endif %}">
+            <label class="control-label" for="answer">Answer something:</label>
+            <div class="controls">
+                {{ form.answer(rows=5,cols=100) }}
+                {% for error in form.errors.answer %}
+                    <span class="help-inline">[{{error}}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <input class="btn btn-primary" type="submit" value="Answer!">
+            </div>
+        </div>
+    </form>
+</div>
+{% endif %}
+{% for answer in answers.items %}
+    {% include 'answer.html' %}
+{% endfor %}
+<ul class="pager">
+    {% if answers.has_prev %}
+    <li class="previous"><a href="{{ url_for('question', qid = question.id, page = answers.prev_num) }}">Newer answers</a></li>
+    {% else %}
+    <li class="previous disabled"><a href="#">Newer answers</a></li>
+    {% endif %}
+    {% if answers.has_next %}
+    <li class="next"><a href="{{ url_for('question', qid = question.id, page = answers.next_num) }}">Older answers</a></li>
+    {% else %}
+    <li class="next disabled"><a href="#">Older answers</a></li>
+    {% endif %}
+</ul>
+{% endblock %}
